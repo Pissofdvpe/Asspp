@@ -24,7 +24,7 @@ struct AccountView: View {
 
     #if os(macOS)
         private var macOSBody: some View {
-            NavigationStack {
+            NavigationView {
                 accountsTable
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
                     .navigationTitle("Accounts")
@@ -34,13 +34,12 @@ struct AccountView: View {
                 AddAccountView()
                     .frame(idealHeight: 200)
             }
-            .toolbarBackgroundVisibility(.hidden, for: .windowToolbar)
         }
 
         private var accountsTable: some View {
             Table(vm.accounts, selection: $selectedID) {
                 TableColumn("Email") { account in
-                    NavigationLink(value: account.id) {
+                    NavigationLink(destination: AccountDetailView(accountId: account.id)) {
                         Text(account.account.email)
                             .redacted(reason: .placeholder, isEnabled: vm.demoMode)
                     }
@@ -54,23 +53,18 @@ struct AccountView: View {
                     Text(ApplePackage.Configuration.countryCode(for: account.account.store) ?? "-")
                 }
             }
-            .navigationDestination(for: AppStore.UserAccount.ID.self) { id in
-                AccountDetailView(accountId: id)
-            }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .overlay {
                 if vm.accounts.isEmpty {
-                    ContentUnavailableView(
-                        label: {
-                            Label("No Accounts", systemImage: "person.crop.circle.badge.questionmark")
-                        },
-                        description: {
-                            Text("Add an Apple ID to start downloading IPA packages.")
-                        },
-                        actions: {
-                            Button("Add Account") { addAccount.toggle() }
-                        }
-                    )
+                    VStack(spacing: 12) {
+                        Label("No Accounts", systemImage: "person.crop.circle.badge.questionmark")
+                            .font(.title2)
+                        Text("Add an Apple ID to start downloading IPA packages.")
+                            .font(.body)
+                            .foregroundStyle(.secondary)
+                        Button("Add Account") { addAccount.toggle() }
+                            .buttonStyle(.bordered)
+                    }
                     .padding()
                 }
             }

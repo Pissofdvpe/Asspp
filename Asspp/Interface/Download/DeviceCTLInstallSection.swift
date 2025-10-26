@@ -30,7 +30,6 @@
             } header: {
                 HStack {
                     Label("Control", systemImage: installSuccess ? "checkmark" : dm.selectedDevice?.type.symbol ?? "iphone")
-                        .contentTransition(.symbolEffect(.replace))
                     Spacer()
 
                     if dm.installingProcess != nil || isLoading {
@@ -43,7 +42,6 @@
                         reloadDevice()
                     } label: {
                         Label("Refresh Devices", systemImage: "arrow.clockwise")
-                            .symbolEffect(.wiggle, options: .nonRepeating, value: wiggle)
                     }
                     .buttonStyle(.borderless)
                     .disabled(isLoading || dm.installingProcess != nil)
@@ -97,7 +95,7 @@
                     return
                 }
                 await fetchInstalledApp()
-                try? await Task.sleep(for: .seconds(1))
+                try? await Task.sleep(nanoseconds: 1_000_000_000) // 1 second
                 installSuccess = false // hide symbol
             }
         }

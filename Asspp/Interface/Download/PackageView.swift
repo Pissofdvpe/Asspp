@@ -112,7 +112,6 @@ struct PackageView: View {
                                 }
                             } label: {
                                 Image(systemName: copied ? "checkmark" : "document.on.document")
-                                    .contentTransition(.symbolEffect(.replace))
                             }
                             .help("Copy File Path")
                             .buttonStyle(.borderless)

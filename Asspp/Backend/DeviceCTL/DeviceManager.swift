@@ -7,17 +7,17 @@
 
 #if os(macOS)
     import ApplePackage
+    import Combine
     import Foundation
 
-    @Observable
-    class DeviceManager {
+    class DeviceManager: ObservableObject {
         static let this = DeviceManager()
 
-        var hint: Hint?
+        @Published var hint: Hint?
 
-        var installingProcess: Process?
-        var devices = [DeviceCTL.Device]()
-        var selectedDeviceID: String?
+        @Published var installingProcess: Process?
+        @Published var devices = [DeviceCTL.Device]()
+        @Published var selectedDeviceID: String?
 
         var selectedDevice: DeviceCTL.Device? {
             devices.first(where: { $0.id == selectedDeviceID })

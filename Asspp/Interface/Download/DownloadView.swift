@@ -11,17 +11,12 @@ struct DownloadView: View {
     @StateObject var vm = Downloads.this
 
     var body: some View {
+        NavigationView {
+            content
+                .navigationTitle("Downloads")
+        }
         #if os(iOS)
-            NavigationView {
-                content
-                    .navigationTitle("Downloads")
-            }
             .navigationViewStyle(.stack)
-        #else
-            NavigationStack {
-                content
-                    .navigationTitle("Downloads")
-            }
         #endif
     }
 

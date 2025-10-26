@@ -139,13 +139,7 @@ private struct App: SwiftUI.App {
             WindowGroup(id: "main-window") {
                 MainView()
             }
-            .apply { view in
-                if #available(macOS 13.0, *) {
-                    view.windowResizability(.contentSize)
-                } else {
-                    view
-                }
-            }
+            .windowResizability(.contentSize)
         #else
             WindowGroup(id: "main-window") {
                 if #available(iOS 26.0, *) {

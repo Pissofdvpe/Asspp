@@ -16,15 +16,11 @@ struct SettingView: View {
     @StateObject var vm = AppStore.this
 
     var body: some View {
+        NavigationView {
+            formContent
+        }
         #if os(iOS)
-            NavigationView {
-                formContent
-            }
             .navigationViewStyle(.stack)
-        #else
-            NavigationStack {
-                formContent
-            }
         #endif
     }
 

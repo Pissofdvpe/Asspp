@@ -19,7 +19,7 @@
                 ])
             }
             do {
-                process.executableURL = URL(filePath: executablePath)
+                process.executableURL = URL(fileURLWithPath: executablePath)
                 process.arguments = args
                 try process.run()
                 process.waitUntilExit()

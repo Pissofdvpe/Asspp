@@ -33,27 +33,13 @@ struct SearchView: View {
     }
 
     var body: some View {
-        #if os(iOS)
-            if #available(iOS 16, *) {
-                // Temporary workaround for the auto-pop issue on iOS 16 when using NavigationView
-                // reference: https://stackoverflow.com/questions/66559814/swiftui-navigationlink-pops-out-by-itself#comment136786758_77588007
-                NavigationStack {
-                    if #available(iOS 26.0, *) {
-                        modernContent
-                    } else {
-                        legacyContent
-                    }
-                }
+        NavigationView {
+            if #available(iOS 26.0, *) {
+                modernContent
             } else {
-                NavigationView {
-                    legacyContent
-                }
-            }
-        #else
-            NavigationStack {
                 legacyContent
             }
-        #endif
+        }
     }
 
     var searchTypePicker: some View {
