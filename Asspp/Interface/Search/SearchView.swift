@@ -34,11 +34,15 @@ struct SearchView: View {
 
     var body: some View {
         NavigationView {
-            if #available(iOS 26.0, *) {
-                modernContent
-            } else {
+            #if os(iOS)
+                if #available(iOS 26.0, *) {
+                    modernContent
+                } else {
+                    legacyContent
+                }
+            #else
                 legacyContent
-            }
+            #endif
         }
     }
 

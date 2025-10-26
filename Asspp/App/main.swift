@@ -139,7 +139,6 @@ private struct App: SwiftUI.App {
             WindowGroup(id: "main-window") {
                 MainView()
             }
-            .windowResizability(.contentSize)
         #else
             WindowGroup(id: "main-window") {
                 if #available(iOS 26.0, *) {

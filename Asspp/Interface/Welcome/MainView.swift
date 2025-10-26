@@ -23,14 +23,16 @@ struct MainView: View {
         @StateObject private var downloads = Downloads.this
 
         var body: some View {
-            NavigationSplitView {
+            NavigationView {
                 List(SidebarSection.allCases, selection: $selection) { section in
-                    SidebarRow(section: section, downloads: downloads.runningTaskCount)
-                        .tag(section)
+                    NavigationLink(destination: detailViewDestination(for: section)) {
+                        SidebarRow(section: section, downloads: downloads.runningTaskCount)
+                    }
+                    .tag(section)
                 }
                 .frame(minWidth: 220)
                 .listStyle(.sidebar)
-            } detail: {
+
                 Group {
                     if let selection {
                         detailView(for: selection)
@@ -40,6 +42,11 @@ struct MainView: View {
                 }
                 .frame(minWidth: 400, minHeight: 250)
             }
+        }
+
+        @ViewBuilder
+        private func detailViewDestination(for section: SidebarSection) -> some View {
+            detailView(for: section)
         }
 
         @ViewBuilder
